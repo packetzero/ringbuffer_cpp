@@ -63,7 +63,7 @@ TEST_F(RingBufferTest, basic)
 
   // get first value
   ASSERT_TRUE(rb->dequeue(val));
-  ASSERT_EQ(0, memcmp(&gVal1, &val, sizeof(val)) == 0);
+  ASSERT_EQ(0, memcmp(&gVal1, &val, sizeof(val)));
   ASSERT_EQ(1, rb->_writeSlots());
   ASSERT_EQ(1, rb->_readSlots());
 
@@ -79,14 +79,14 @@ TEST_F(RingBufferTest, basic)
   // get second value
 
   ASSERT_TRUE(rb->dequeue(val));
-  ASSERT_EQ(0, memcmp(&gVal2, &val, sizeof(val)) == 0);
+  ASSERT_EQ(0, memcmp(&gVal2, &val, sizeof(val)));
   ASSERT_EQ(1, rb->_writeSlots());
   ASSERT_EQ(1, rb->_readSlots());
 
   // get third value
 
   ASSERT_TRUE(rb->dequeue(val));
-  ASSERT_EQ(0, memcmp(&gVal3, &val, sizeof(val)) == 0);
+  ASSERT_EQ(0, memcmp(&gVal3, &val, sizeof(val)));
   ASSERT_EQ(2, rb->_writeSlots());
   ASSERT_EQ(0, rb->_readSlots());
   ASSERT_TRUE(rb->isEmpty());
@@ -113,7 +113,7 @@ TEST_F(RingBufferTest, basic)
   // get fourth value
 
   ASSERT_TRUE(rb->dequeue(val));
-  ASSERT_EQ(0, memcmp(&gVal4, &val, sizeof(val)) == 0);
+  ASSERT_EQ(0, memcmp(&gVal4, &val, sizeof(val)));
   ASSERT_EQ(1, rb->_writeSlots());
   ASSERT_EQ(1, rb->_readSlots());
   ASSERT_FALSE(rb->isEmpty());
@@ -122,7 +122,7 @@ TEST_F(RingBufferTest, basic)
   // get fifth value
 
   ASSERT_TRUE(rb->dequeue(val));
-  ASSERT_EQ(0, memcmp(&gVal5, &val, sizeof(val)) == 0);
+  ASSERT_EQ(0, memcmp(&gVal5, &val, sizeof(val)));
   ASSERT_EQ(2, rb->_writeSlots());
   ASSERT_EQ(0, rb->_readSlots());
   ASSERT_TRUE(rb->isEmpty());

@@ -21,13 +21,13 @@ public:
   {
     if (isFull()) { _drops++; return false; }
 
+    // copy
+
+    _vec[_widx] = val;
+
     // calculate next slot index
 
     unsigned int idx = _next(_widx);
-
-    // copy
-
-    _vec[idx] = val;
 
     // update write index
 
