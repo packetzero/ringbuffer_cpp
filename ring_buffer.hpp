@@ -21,27 +21,27 @@ public:
    * @returns false if no write slots available and val is not written to queue.
    * Calls isFull() internally.
    */
-  virtual bool push(T val) = 0;
+  virtual bool enqueue(T val) = 0;
 
   /*
    * If data is available, val will contain head of queue, read index is advanced, and true will be returned.
    * Otherwise, false is returned and val is untouched.
    * Calls isEmpty() internally.
    */
-  virtual bool pop(T &val) = 0;
+  virtual bool dequeue(T &val) = 0;
 
   /*
    * Returns true if all data has been read.
    */
   virtual bool isEmpty() = 0;
-  
+
   /*
-   * Returned true if no space left to write (push).
+   * Returned true if no space left to write (enqueue).
    */
   virtual bool isFull() = 0;
-  
+
   /*
-   * The drops counter is incremented each time push() is called when isFull() == true.
+   * The drops counter is incremented each time enqueue() is called when isFull() == true.
    */
   virtual unsigned int drops() = 0;
 

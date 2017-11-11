@@ -22,7 +22,7 @@ void write_thread_func(RingBuffer<int>* rb)
   while (keepWriting)
   {
     if (have_a_value)
-      rb->push(value);
+      rb->enqueue(value);
 
     wait_for_more_data();
   }
@@ -34,7 +34,7 @@ void read_thread_func(RingBuffer<int>* rb)
 
   while (keepReading)
   {
-    while (rb->pop(value)) {
+    while (rb->dequeue(value)) {
       // got one
     }
 
