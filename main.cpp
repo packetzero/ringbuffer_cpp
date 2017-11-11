@@ -127,8 +127,60 @@ TEST_F(RingBufferTest, basic)
   ASSERT_EQ(0, rb->_readSlots());
   ASSERT_TRUE(rb->isEmpty());
   ASSERT_FALSE(rb->isFull());
+  ASSERT_EQ(1, rb->drops());
 
   delete rb;
+}
+
+TEST_F(RingBufferTest, misc)
+{
+  mytype val = mytype();
+
+  RingBuffer<mytype>* rb = RingBufferNew(4);
+
+  ASSERT_FALSE(rb->dequeue(val));
+  ASSERT_FALSE(rb->dequeue(val));
+
+  rb->enqueue(gVal1);
+  rb->enqueue(gVal2);
+  ASSERT_TRUE(rb->enqueue(gVal3));
+  ASSERT_FALSE(rb->enqueue(gVal4)); // drop
+  ASSERT_EQ(1, rb->drops());
+
+  rb->dequeue(val);
+  ASSERT_EQ(0, memcmp(&gVal1, &val, sizeof(val)));
+  rb->enqueue(gVal4);
+
+  rb->dequeue(val);
+  ASSERT_EQ(0, memcmp(&gVal2, &val, sizeof(val)));
+  rb->enqueue(gVal5);
+
+  rb->dequeue(val);
+  ASSERT_EQ(0, memcmp(&gVal3, &val, sizeof(val)));
+  rb->enqueue(gVal1);
+
+  rb->dequeue(val);
+  ASSERT_EQ(0, memcmp(&gVal4, &val, sizeof(val)));
+  rb->enqueue(gVal2);
+
+  rb->dequeue(val);
+  ASSERT_EQ(0, memcmp(&gVal5, &val, sizeof(val)));
+  rb->enqueue(gVal3);
+
+  ASSERT_TRUE(rb->isFull());
+  ASSERT_EQ(1, rb->drops());
+
+  rb->dequeue(val);
+  ASSERT_EQ(0, memcmp(&gVal1, &val, sizeof(val)));
+  rb->dequeue(val);
+  ASSERT_EQ(0, memcmp(&gVal2, &val, sizeof(val)));
+  ASSERT_TRUE(rb->dequeue(val));
+  ASSERT_EQ(0, memcmp(&gVal3, &val, sizeof(val)));
+
+  ASSERT_FALSE(rb->dequeue(val));
+  ASSERT_TRUE(rb->isEmpty());
+  ASSERT_FALSE(rb->isFull());
+
 }
 
 
